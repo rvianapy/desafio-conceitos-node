@@ -79,12 +79,16 @@ app.delete("/repositories/:id", validateId, (request, response) => {
 
   const repositoryIndex = repositories.findIndex(repository => repository.id == id);
 
-  if (repositoryIndex < 0) {
-    return response.status(400).json({error: 'Repository not found!'});
+  // if (repositoryIndex < 0) {
+  //   return response.status(400).json({error: 'Repository not found!'});
+  // }
+
+  if (repositoryIndex >= 0) {
+    repositories.splice(repositoryIndex, 1);
+  } else {
+    return response.status(400).json({ error: 'Repository does not exists.'});
   }
-
-  repositories.splice(repositoryIndex, 1);
-
+  
   return response.status(204).send();
 
 });
